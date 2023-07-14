@@ -8,6 +8,7 @@ import ratios from '../../styles/ratios';
 import ErrorHandler from '../../components/ErrorHandler';
 
 import { errormessage, bwmessage } from '../../styles/CommonError';
+import MainButton from '../../components/mainButton/MainButton';
 
 
 
@@ -71,7 +72,7 @@ const Register = ({ navigation }) => {
 
         // ab hame check krna ke bhai agr koi fields empty hai to ham 1 error dekhaye ge please fill all fields 
         if (fdata.fullName === "" || fdata.email === "" || fdata.password === "") {
-setLoading(false)
+            setLoading(false)
             // agr in me se kush me blank hai to 1 error set krdo
             setErrormsg("All fields are required");
             // ab ye error message ap kahi pe be dekha skty ho jese me form ke top me he dekha deta hu
@@ -344,23 +345,23 @@ setLoading(false)
                 </TouchableOpacity>
                 </View> */}
 
-                { loading ? <ActivityIndicator size={'large'} color="red" /> :
+                    {loading ? <ActivityIndicator size={'large'} color="red" /> :
 
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={{ width: widthPixel(45), height: heightPixel(45) }}
-                            source={require("../../assets/images/google-logo.png")}
-                        />
-                        <Image
-                            style={{ width: widthPixel(45), height: heightPixel(45) }}
-                            source={require("../../assets/images/fb-logo.png")}
-                        />
-                        <Image
-                            style={{ width: widthPixel(45), height: heightPixel(45) }}
-                            source={require("../../assets/images/apple-logo.png")}
-                        />
-                    </View>
-}
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={{ width: widthPixel(45), height: heightPixel(45) }}
+                                source={require("../../assets/images/google-logo.png")}
+                            />
+                            <Image
+                                style={{ width: widthPixel(45), height: heightPixel(45) }}
+                                source={require("../../assets/images/fb-logo.png")}
+                            />
+                            <Image
+                                style={{ width: widthPixel(45), height: heightPixel(45) }}
+                                source={require("../../assets/images/apple-logo.png")}
+                            />
+                        </View>
+                    }
 
 
 
@@ -375,19 +376,20 @@ setLoading(false)
 
 
 
-                    <View style={styles.button}>
-                        <TouchableOpacity
+                    <TouchableOpacity onPress={() => sendToBackend()}>
+                        <MainButton title="Register" />
+                    </TouchableOpacity>
 
+                    {/* <View style={styles.button}>
+                        <TouchableOpacity
                             // eske bad me ham register wale button pe backend lagaye ge
                             // to yaha sendToBackend ka me 1 function bana donga
                             // or ese uper declare kr doga
-                            onPress={() => {
-                                sendToBackend();
-                            }}
+                            onPress={() => { sendToBackend(); }}
                         >
                             <Text style={styles.loginButton}>Register</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </ScrollView>
             </KeyboardAvoidingView>
         </View>
@@ -479,23 +481,7 @@ const styles = StyleSheet.create({
         fontSize: fontPixel(16),
         // backgroundColor: "gray",
     },
-    button: {
-        // alignItems: 'flex-end',
-        backgroundColor: "#FFECD0",
-        width: widthPixel(144),
-        height: heightPixel(60),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 7,
-        marginHorizontal: widthPixel(30),
-        alignSelf: 'flex-end',
-        marginTop: -41,
-    },
-    loginButton: {
-        color: "#372329",
-        fontFamily: "Nunito-Italic",
-        fontSize: fontPixel(24),
-    }
+ 
 
 })
 

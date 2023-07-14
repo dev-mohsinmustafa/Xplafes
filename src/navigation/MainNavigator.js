@@ -16,6 +16,10 @@ import ConnectNearby from '../screens/home/ConnectNearby';
 import Settings1 from '../screens/settings/Settings1';
 import ChangePassword from '../screens/settings/ChangePassword';
 import EditProfile from '../screens/settings/EditProfile';
+import ChangeUsername from '../screens/settings/ChangeUsername';
+// import ChangeDescription from '../screens/settings/ChangeDescription';
+import UploadProfilePicture from '../screens/settings/UploadProfilePicture';
+import ChangeDescription from '../screens/settings/ChangeDescription';
 
 
 
@@ -32,7 +36,7 @@ const MainNavigator = () => {
       <Stack.Navigator
 
         screenOptions={{ headerShown: false, animation: "slide_from_right" }}
-        initialRouteName="Login">
+        initialRouteName="XplafesList">
 
         <Stack.Screen
           name="Login"
@@ -40,24 +44,24 @@ const MainNavigator = () => {
         // options={{title: 'Welcome to Splash Screen'}}
         />
 
-        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Verification" component={Verification} />
-        {/* <Stack.Screen name="Profile" component={Profile} /> */}
+        <Stack.Screen name="Register" component={Register} />
 
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ForgotPasswordVerificationCode" component={ForgotPasswordVerificationCode} />
         <Stack.Screen name="ForgotPassword_ChoosePassword" component={ForgotPassword_ChoosePassword} />
 
-
-
         <Stack.Screen name="XplafesDetail" component={XplafesDetail} />
         <Stack.Screen name="BibleDetail" component={BibleDetail} />
         <Stack.Screen name="ConnectNearby" component={ConnectNearby} />
         <Stack.Screen name="Settings1" component={Settings1} />
-        <Stack.Screen name="Profile" component={Profile} />
 
         <Stack.Screen name="ChangePassword" component={ChangePassword} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+
+        <Stack.Screen name="ChangeUsername" component={ChangeUsername} />
+        <Stack.Screen name="ChangeDescription" component={ChangeDescription} />
+        <Stack.Screen name="UploadProfilePicture" component={UploadProfilePicture} />
 
 
 

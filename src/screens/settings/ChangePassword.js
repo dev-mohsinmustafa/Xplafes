@@ -172,9 +172,9 @@ const ChangePassword = ({ navigation }) => {
 
                     <View style={styles.textContainer}>
                         <View style={styles.container1}>
-                            {/* <Text style={styles.login}>Choose Password</Text> */}
+                            <Text style={styles.login}>Choose Password</Text>
                         </View>
-                        {/* <Text style={styles.bwmessage}>Choose a strong password </Text> */}
+                        <Text style={styles.bwmessage}>Choose a strong password </Text>
 
                         {/* yaha me ab error dekha deta hun agr user sara khush ni fill krta to */}
                         {
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
         // height:heightPixel(67),
         left: 21,
         // bottom: 20,
-        marginTop: heightPixel(396),
+        marginTop: heightPixel(260),
 
     },
     login: {

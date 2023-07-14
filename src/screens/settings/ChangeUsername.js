@@ -11,6 +11,7 @@ import { errormessage, bwmessage } from '../../styles/CommonError';
 import ratios from '../../styles/ratios';
 import GoBack from '../../components/button/GoBack';
 import MainButton from '../../components/mainButton/MainButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -33,24 +34,14 @@ let {
 
 
 
-const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
+const ChangeUsername = ({ navigation }) => {
 
 
-    const { email } = route.params;
-    console.log(email);
     // ab ese compare krenge jo user enter krega code
 
 
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [fullName, setFullName] = useState("");
     const [loading, setLoading] = useState(false);
-
-
-
-
-
-
-
     const [errormsg, setErrormsg] = useState(null);
     // ab mene data lena hai to 1 user ki hook bana lety hai
 
@@ -58,47 +49,70 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
 
 
     const sendToBackend = () => {
-        // agr ye dono password matched krty to agy barho nai to error 
-        if (password == "" || confirmPassword == "") {
-            Alert.alert("Plese enter password")
-            setErrormsg("Please enter your password");
+        console.log("Username change horaga console me to", fullName);
 
-        } else if (password != confirmPassword) {
-            // setErrormsg("Password does not Matched")
-            Alert.alert("Password does not Matched")
+        // agr ye username hai to agy barho nai to error 
+        if (fullName == "") {
+            Alert.alert("Plese enter new username")
+            setErrormsg("Please enter a new username");
         }
         else {
             setLoading(true);
-            fetch("http://10.0.2.2:8090/resetPassword", {
+            fectchData();
+        }
+    }
+
+    // ab hame yaha sab se pehle async storage se email nikalne hai kyo ke ham email ab waha provide 
+    // ne kr rye pele ham route params se nikal rahe thy 
+    // to us ke leye .get wala method likhna hai
+
+
+
+
+    const fectchData = async () => {
+        console.log("Username change horaga console me to", fullName);
+        try {
+            const data1 = await AsyncStorage.getItem("user")
+            const response = await fetch("http://10.0.2.2:8090/setusername", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: email, password: password }),
+                body: JSON.stringify({
+                    email: JSON.parse(data1).user.email, //ye email nikal lya
+                    fullName: fullName                   //ye fullName nikal lya
+                }),
                 // ye email hamy pata params se araha hai or password jo uper hook banai us se araha hai 
+                //or wapis bhej dya body ke ander ab ye backend me chla jaye ga 
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.message === "Password Changed Successfully") {
-                        setErrormsg("Password Code Matched")
+            // ye ab jo backend se response aya hai wo hao
+            const data = await response.json()
+            if (data.message === "Username Updated Successfully") {
+                setErrormsg("Username Matched")
+                setLoading(false)
+                console.log("Dekho mohsin change howa hai username", data);
 
-                        setLoading(false)
-                        Alert.alert(data.message);
-                        navigation.navigate("Login")
-                    }
-                    else {
-                        setLoading(false)
-                        Alert.alert("Something went wrong !! Try Password Again")
-                    }
-                })
-                .catch(err => {
-                    setLoading(false);
-                    Alert.alert(err)
-                    console.log(err);
-                })
+                Alert.alert("Username has been set Successfully");
+                navigation.navigate("Settings1")
+
+            }
+            else if (data.err == "Invalid Credentials") {
+                setLoading(false);
+                AsyncStorage.removeItem("user")
+                navigation.navigate("Login");
+            }
+            else {
+                console.log("Dekho mohsin username aya ke nai", data);
+                setLoading(false)
+                Alert.alert("Username not available!! Try Username Again!")
+            }
+        }
+        catch (err) {
+            setLoading(false);
+            Alert.alert("Server Error")
+            console.log("Username not available");
         }
     }
-
 
 
 
@@ -162,21 +176,14 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
                     />
                     <View style={styles.textContainer}>
                         <View style={styles.container1}>
-                            <Text style={styles.login}>Choose Password</Text>
+                            <Text style={styles.login}>Change Username</Text>
                         </View>
-                        <Text style={styles.bwmessage}>Choose a strong password </Text>
+                        <Text style={styles.bwmessage}>Please Choose your username </Text>
 
                         {/* yaha me ab error dekha deta hun agr user sara khush ni fill krta to */}
                         {
-                            // 1st method
-                            // errormsg ? <ErrorHandler /> : null
-
                             // 2nd method
                             errormsg ? <Text style={errormessage}>{errormsg}</Text> : null
-
-                            // 3rd method
-                            // errormsg && <ErrorHandler title={errormsg} />
-
                         }
 
 
@@ -184,54 +191,26 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
 
                         <View style={{ marginTop: heightPixel(19) }}>
                             <View style={styles.container2}>
-                                <Text style={styles.email}>Enter password</Text>
+                                <Text style={styles.email}>Enter new username</Text>
                             </View>
 
                             <View style={styles.inputContainer}>
                                 <TextInput
-                                    placeholder='Please enter your password'
+                                    placeholder='Please enter your new username'
                                     placeholderTextColor="#FFECD0"
                                     style={[styles.input, styles.email]}
-
-                                    onChangeText={(text) => setPassword(text)}
-
-                                    secureTextEntry={true}
-
+                                    onChangeText={(text) => setFullName(text)}
                                     onPressIn={() => setErrormsg(null)}
-
-
                                 />
                             </View>
 
                         </View>
 
 
-                        <View style={{ marginTop: heightPixel(19) }}>
-                            <View style={styles.container2}>
-                                <Text style={styles.email}>Confirm password</Text>
-                            </View>
 
-                            <View style={styles.inputContainer}>
-                                <TextInput
-                                    placeholder='Please enter your confirm password'
-                                    placeholderTextColor="#FFECD0"
-                                    style={[styles.input, styles.email]}
-
-                                    onChangeText={(text) => setConfirmPassword(text)}
-
-                                    secureTextEntry={true}
-
-                                    onPressIn={() => setErrormsg(null)}
-
-
-                                />
-                            </View>
-
-                        </View>
 
 
                     </View>
-                    {/* </ImageBackground> */}
 
                     <View style={styles.forgotContainer}>
 
@@ -271,10 +250,10 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
                     </View>
 
                     <TouchableOpacity onPress={() => sendToBackend()}>
-                        <MainButton title="Next" />
+                        <MainButton title="Save" />
                     </TouchableOpacity>
 
-                
+
                 </ScrollView>
 
             </KeyboardAvoidingView>
@@ -287,6 +266,7 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
     )
 }
 
+export default ChangeUsername;
 
 
 const styles = StyleSheet.create({
@@ -361,12 +341,7 @@ const styles = StyleSheet.create({
         // marginLeft: widthPixel(217),
         marginTop: heightPixel(13)
     },
-    forgotButton: {
-        color: "#FFECD0",
-        fontFamily: "Nunito-Bold",
-        fontSize: fontPixel(14),
-        // backgroundColor: "blue",
-    },
+
     imageContainer: {
         flexDirection: 'row',
         marginLeft: widthPixel(25)
@@ -388,10 +363,9 @@ const styles = StyleSheet.create({
         fontSize: fontPixel(16),
         // backgroundColor: "gray",
     },
-   
+
 })
 
 
 
 
-export default ForgotPassword_ChoosePassword;

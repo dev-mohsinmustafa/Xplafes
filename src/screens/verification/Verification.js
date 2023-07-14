@@ -73,10 +73,16 @@ const [loading, setLoading] = useState(false);
     // useEffect is leye lagaya ke jese he page load ho to backend se code ko nikal lo userdata 
     //    ke ander se jo araha hai
 
-    useEffect(() => {
-        setActualCode(userdata[0]?.VerificationCode)
-    }, [])
+    // useEffect(() => {
+    //     setActualCode(userdata[0]?.VerificationCode)
+    // }, [])
 
+    useEffect(() => {
+        if (userdata && userdata.length > 0) {
+          setActualCode(userdata[0]?.VerificationCode);
+        }
+      }, [userdata]);
+      
 
 
 
@@ -310,7 +316,7 @@ const [loading, setLoading] = useState(false);
                         <TouchableOpacity
                             onPress={() => sendToBackend()}
                         >
-                            <Text style={styles.loginButton}>Verify</Text>
+                            <Text style={styles.loginButton}>Verifyjkj</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

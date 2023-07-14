@@ -8,6 +8,7 @@ import AwesomeIcon from 'react-native-vector-icons/Ionicons';
 import ratios from '../../styles/ratios';
 import Header from '../../components/header/Header';
 
+
 let {
   widthPixel,
   heightPixel,
@@ -18,6 +19,8 @@ let {
 
 
 const Profile = ({ navigation }) => {
+
+
 
   // const data = {
   //   username: "mohsinmustafaansari",
@@ -31,54 +34,96 @@ const Profile = ({ navigation }) => {
 
 
 
-  // yaha ab get krna hai data
-  useEffect(() => {
-    AsyncStorage.getItem("user")
-      .then(async (value) => {
-        // const email = JSON.parse(value)?.user?.email;
-        // if (email) {
-        fetch("http://10.0.2.2:8090/userdata", {
+  const loaddata = async () => {
+    const fetchData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("user")
+        const response = await fetch("http://10.0.2.2:8090/userdata", {
           method: 'POST',
           headers: {
-            "Content-Type" : "application/json",
+            "Content-Type": "application/json",
             // value me se token nikalna hai
-            "Authorization" : "Bearer " + JSON.parse(value).token, 
+            "Authorization": "Bearer " + JSON.parse(value).token,
           },
           // body: JSON.stringify({ email }),
           body: JSON.stringify({ email: JSON.parse(value).user.email }),
-
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.message == 'User found') {
-              setUserdata(data.user);
-              console.log('Userdata:', data.user);
-            } else {
-              navigation.navigate("Login");
-              Alert.alert("Login in again ");
-              console.log("User not found.");
-            }
-            setLoading(false);
-          })
-          .catch(err => {
-            Alert.alert(err);
-            navigation.navigate("Login");
-            setLoading(false);
-          });
-        // } else {
-        //   navigation.navigate('Login');
-        //   setLoading(false);
-        // }
-      })
-      .catch(err => {
+        });
+        const data = await response.json()
+        if (data.message == "User found") {
+          setUserdata(data.user);
+          console.log('Userdata:', data.user);
+        } else {
+          navigation.navigate("Login");
+          Alert.alert("Login in again ");
+          console.log("User not found.");
+        }
+        setLoading(false);
+      }
+      catch (err) {
         Alert.alert(err);
         navigation.navigate("Login");
         setLoading(false);
-      });
-  }, [navigation]);
+      };
+    }
+    fetchData();
+  }
 
+  // yaha ab get krna hai data
+  // with try catch
+  useEffect(() => {
+    loaddata()
+  }, [navigation]);
   console.log("async userdata from Profile screen", userdata);
 
+
+
+  // with then catch
+  // useEffect(() => {
+  //   AsyncStorage.getItem("user")
+  //     .then(async (value) => {
+  // es ko ese email ka variable bana ke store be krwa skty hain
+  //       // const email = JSON.parse(value)?.user?.email;
+  //       // if (email) {
+  //       fetch("http://10.0.2.2:8090/userdata", {
+  //         method: 'POST',
+  //         headers: {
+  //           "Content-Type" : "application/json",
+  //           // value me se token nikalna hai
+  //           "Authorization" : "Bearer " + JSON.parse(value).token, 
+  //         },
+  //         // body: JSON.stringify({ email }),
+  //         body: JSON.stringify({ email: JSON.parse(value).user.email }),
+
+  //       })
+  //         .then(res => res.json())
+  //         .then(data => {
+  //           if (data.message == 'User found') {
+  //             setUserdata(data.user);
+  //             console.log('Userdata:', data.user);
+  //           } else {
+  //             navigation.navigate("Login");
+  //             Alert.alert("Login in again ");
+  //             console.log("User not found.");
+  //           }
+  //           setLoading(false);
+  //         })
+  //         .catch(err => {
+  //           Alert.alert(err);
+  //           navigation.navigate("Login");
+  //           setLoading(false);
+  //         });
+  //       // } else {
+  //       //   navigation.navigate('Login');
+  //       //   setLoading(false);
+  //       // }
+  //     })
+  //     .catch(err => {
+  //       Alert.alert(err);
+  //       navigation.navigate("Login");
+  //       setLoading(false);
+  //     });
+  // }, [navigation]);
+  // console.log("async userdata from Profile screen", userdata);
 
   if (loading) {
     return (
@@ -91,7 +136,7 @@ const Profile = ({ navigation }) => {
 
 
 
-  // yaha ab get krna hai data
+  // yaha ab get krna hai data ye code ne chla na he koi error hai isme
   // useEffect(() => {
   //   AsyncStorage.getItem("user")
   //     .then( value => {
@@ -187,16 +232,22 @@ const Profile = ({ navigation }) => {
       <View style={styles.container2}>
         <Text style={styles.profile}>Profile</Text>
 
-        <Pressable
-
+        <Pressable style
           onPress={() => navigation.navigate("Settings1")}>
           <AwesomeIcon name="settings-sharp" size={30} color="#372329"
           />
-
         </Pressable>
 
 
       </View>
+
+
+      <Pressable style={styles.refresh}
+        onPress={() => loaddata()}>
+        <AwesomeIcon name="refresh" size={30} color="red"
+        />
+      </Pressable>
+
 
       <View style={styles.container3}>
         {
@@ -326,7 +377,7 @@ const styles = StyleSheet.create({
   },
 
   container3: {
-    backgroundColor: "green",
+    // backgroundColor: "green",
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -339,7 +390,7 @@ const styles = StyleSheet.create({
     borderRadius: 75
   },
   container4: {
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     flex: 1
 
   },
@@ -411,6 +462,12 @@ const styles = StyleSheet.create({
     fontSize: fontPixel(20),
 
   },
+  refresh: {
+    position: 'absolute',
+    top: 80,
+    right: 16,
+    zIndex: 1,
+  }
 })
 
 export default Profile;

@@ -33,15 +33,14 @@ const EditProfile = ({ navigation }) => {
             </View>
 
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("UploadProfilePicture")}>
                     <Text style={styles.text}>Change Profile Picture</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("ChangeUsername")}>
                     <Text style={styles.text}  >Change Username</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.text}>Customer Support </Text>
-
+                <TouchableOpacity onPress={()=>navigation.navigate("ChangeDescription")}>
+                    <Text style={styles.text}>Change Description </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                 // onPress={() => logout()}

@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ratios from '../../styles/ratios';
 import { useNavigation } from '@react-navigation/native';
 import ErrorHandler from '../../components/ErrorHandler';
+import MainButton from '../../components/mainButton/MainButton';
 
 let {
     widthPixel,
@@ -220,20 +221,20 @@ const Login = () => {
 
                     {/* {loading ? <ActivityIndicator size={'large'} color="red" /> : */}
 
-                        <View style={styles.imageContainer}>
-                            <Image
-                                style={{ width: widthPixel(45), height: heightPixel(45) }}
-                                source={require("../../assets/images/google-logo.png")}
-                            />
-                            <Image
-                                style={{ width: widthPixel(45), height: heightPixel(45) }}
-                                source={require("../../assets/images/fb-logo.png")}
-                            />
-                            <Image
-                                style={{ width: widthPixel(45), height: heightPixel(45) }}
-                                source={require("../../assets/images/apple-logo.png")}
-                            />
-                        </View>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            style={{ width: widthPixel(45), height: heightPixel(45) }}
+                            source={require("../../assets/images/google-logo.png")}
+                        />
+                        <Image
+                            style={{ width: widthPixel(45), height: heightPixel(45) }}
+                            source={require("../../assets/images/fb-logo.png")}
+                        />
+                        <Image
+                            style={{ width: widthPixel(45), height: heightPixel(45) }}
+                            source={require("../../assets/images/apple-logo.png")}
+                        />
+                    </View>
 
                     {/* } */}
 
@@ -247,15 +248,17 @@ const Login = () => {
                         </TouchableOpacity>
                     </View>
 
+                    <TouchableOpacity onPress={() => sendToBackend()}>
+                        <MainButton title="Login" />
+                    </TouchableOpacity>
 
-
-                    <View style={styles.button}>
+                    {/* <View style={styles.button}>
                         <TouchableOpacity
                             onPress={() => sendToBackend()}
                         >
                             <Text style={styles.loginButton}>Login</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </ScrollView>
 
             </KeyboardAvoidingView>

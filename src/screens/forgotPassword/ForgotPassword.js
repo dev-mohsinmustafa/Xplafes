@@ -11,6 +11,7 @@ import { errormessage, bwmessage } from '../../styles/CommonError';
 
 import ratios from '../../styles/ratios';
 import GoBack from '../../components/button/GoBack';
+import MainButton from '../../components/mainButton/MainButton';
 
 
 
@@ -235,17 +236,11 @@ const ForgotPassword = ({ navigation, route }) => {
                     </View>
 
 
-                    <View style={styles.button}>
+                    <TouchableOpacity onPress={() => sendToBackend()}>
+                        <MainButton title="Next" />
+                    </TouchableOpacity>
 
-
-
-
-                        <TouchableOpacity
-                            onPress={() => sendToBackend()}
-                        >
-                            <Text style={styles.loginButton}>Next</Text>
-                        </TouchableOpacity>
-                    </View>
+                 
 
                 </ScrollView>
 
@@ -360,23 +355,6 @@ const styles = StyleSheet.create({
         fontSize: fontPixel(16),
         // backgroundColor: "gray",
     },
-    button: {
-        // alignItems: 'flex-end',
-        backgroundColor: "#FFECD0",
-        width: widthPixel(144),
-        height: heightPixel(60),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 7,
-        marginHorizontal: widthPixel(30),
-        alignSelf: 'flex-end',
-        marginTop: -41,
-    },
-    loginButton: {
-        color: "#372329",
-        fontFamily: "Nunito-Italic",
-        fontSize: fontPixel(24),
-    }
 
 })
 

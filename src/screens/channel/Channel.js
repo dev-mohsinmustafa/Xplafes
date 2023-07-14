@@ -9,21 +9,23 @@ let {
   fontPixel
 } = ratios;
 
-const Channel = ({navigation}) => {
+const Channel = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
         <Text style={styles.xplafes}>Channel</Text>
       </View>
 
-      <View>
+      <View style={{alignItems:'center',}}>
 
         {
 
           channelData.map((item, index) => {
             return (
-              <TouchableOpacity style={styles.container2}
-              onPress={()=>navigation.navigate("WomenWork")}
+              <TouchableOpacity
+              key={index}
+              style={styles.container2}
+                onPress={() => navigation.navigate("WomenWork")}
               >
                 <Text style={styles.work}>{item.work}</Text>
 

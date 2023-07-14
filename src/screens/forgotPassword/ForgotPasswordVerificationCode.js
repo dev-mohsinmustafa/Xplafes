@@ -10,6 +10,7 @@ import { errormessage, bwmessage } from '../../styles/CommonError';
 
 import ratios from '../../styles/ratios';
 import GoBack from '../../components/button/GoBack';
+import MainButton from '../../components/mainButton/MainButton';
 
 
 
@@ -213,15 +214,11 @@ const ForgotPasswordVerificationCode = ({ navigation, route }) => {
                         </TouchableOpacity>
                     </View>
 
+                    <TouchableOpacity onPress={() => sendToBackend()}>
+                        <MainButton title="Verify" />
+                    </TouchableOpacity>
 
-
-                    <View style={styles.button}>
-                        <TouchableOpacity
-                            onPress={() => sendToBackend()}
-                        >
-                            <Text style={styles.loginButton}>Verify</Text>
-                        </TouchableOpacity>
-                    </View>
+                   
                 </ScrollView>
 
             </KeyboardAvoidingView>
