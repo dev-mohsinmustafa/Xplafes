@@ -20,6 +20,7 @@ import ChangeUsername from '../screens/settings/ChangeUsername';
 // import ChangeDescription from '../screens/settings/ChangeDescription';
 import UploadProfilePicture from '../screens/settings/UploadProfilePicture';
 import ChangeDescription from '../screens/settings/ChangeDescription';
+import UploadProfilePicture1 from '../screens/settings/UploadProfilePicture1';
 
 
 
@@ -62,6 +63,7 @@ const MainNavigator = () => {
         <Stack.Screen name="ChangeUsername" component={ChangeUsername} />
         <Stack.Screen name="ChangeDescription" component={ChangeDescription} />
         <Stack.Screen name="UploadProfilePicture" component={UploadProfilePicture} />
+        <Stack.Screen name="UploadProfilePicture1" component={UploadProfilePicture1} />
 
 
 

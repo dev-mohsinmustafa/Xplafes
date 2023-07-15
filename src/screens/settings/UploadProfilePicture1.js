@@ -50,26 +50,38 @@ const storage = getStorage(app);
 
 
 
-const UploadProfilePicture = ({ navigation }) => {
+const UploadProfilePicture1 = ({ navigation }) => {
 
 
 
-    const [image, setImage] = useState("");
     const [userdata, setUserdata] = useState(null);
-
-
-    const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [transferred, setTransferred] = useState(0);
 
 
+    const pickImage = () => {
+        const options = {
+            mediaType: 'photo',
+            allowsEditing: true,
+            aspectRatio: [1, 1],
+            quality: 1,
+        };
+
+        launchImageLibrary(options).then((result) => {
+            // Handle the result here
+            console.log(result);
+        }).catch((error) => {
+            // Handle any errors here
+            console.log(error);
+        });
+    };
 
 
 
     const handleUpload = () => {
 
-
-        choosePhotoFromLibrary();
+        pickImage()
 
         AsyncStorage.getItem("user")
             .then(data => {
@@ -87,8 +99,6 @@ const UploadProfilePicture = ({ navigation }) => {
                         .then(res => res.json())
                         .then(data => {
                             if (data.message === "Profile Picture Uploaded Successfully") {
-                                console.log("profile aye ke nai", data);
-
                                 setUserdata(data.user);
                                 setUploading(false)
                                 // setLoading(false)
@@ -115,223 +125,37 @@ const UploadProfilePicture = ({ navigation }) => {
     }
 
 
-
-
-    //
-    // const pickImage = async () => {
-    //     const options = {
-    //         mediaType: 'photo',
-    //         allowsEditing: true,
-    //         aspectRatio: [1, 1],
-    //         quality: 1,
-    //     };
-    //     //
-    //     launchImageLibrary(options, async (response) => {
-    //         if (!response.didCancel) {
-    //             // const source = { uri: response.uri };
-    //             // setImage(source);
-    //             const imageUri = Platform.OS === 'ios' ? response.sourceURL : response.path;
-    //             setImage(imageUri);
-
-    //             try {
-    //                 const response = await fetch(imageUri);
-    //                 const blob = await response.blob();
-
-    //                 const storageRef = ref(storage, filename);
-
-    //                 // Create an upload task using the storage reference
-    //                 const uploadTask = uploadBytesResumable(storageRef, blob);
-    //                 // const uploadTask = firebase.storage().ref().child(filename).put(blob);
-    //                 // const ref = firebase.storage().ref().child(filename);
-
-    //                 const filename = response.uri.substring(response.uri.lastIndexOf('/') + 1);
-
-    //                 uploadTask.on(
-    //                     'state_changed',
-    //                     (snapshot) => {
-    //                         // Handle progress updates if needed
-    //                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //                         console.log('Upload is ' + progress + '% done');
-    //                     },
-    //                     (error) => {
-    //                         // Handle unsuccessful upload
-    //                         console.error(error);
-    //                     },
-    //                     () => {
-    //                         // Handle successful upload
-    //                         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-    //                             console.log('File available at', downloadURL);
-    //                         });
-
-    //                     })
-
-
-    //             } catch (error) {
-    //                 console.log(error);
-    //                 return null;
-    //             }
-    //         }
-
-    //     });
-    //     //
-    // }
-
-    // const handleUpload = () => {
-    //     pickImage();
-
-    // };
-
-
-    //
-
-
-
-
-    const takePhotoFromCamera = () => {
-        ImagePicker.openCamera({
-
-            compressImageMaxWidth: 300,
-            compressImageMaxHeight: 300,
-            cropping: true,
-            compressImageQuality: 0.7
-
-        }).then(image => {
-            console.log(image);
-            const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-            setImage(imageUri);
-            // submitPost();
-        });
-        // console.log("Take Photo");
-    }
-
-    const choosePhotoFromLibrary = async () => {
-        ImagePicker.openPicker({
-            compressImageMaxWidth: 300,
-            compressImageMaxHeight: 300,
-            cropping: true,
-            compressImageQuality: 0.7
-        }).then(image => {
-            console.log(image);
-
-            // check image path for ios and andriod 
-            // android image come from path and ios image come from sourceURL
-            const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-            // update state
-            setImage(imageUri);
-            // submitPost();
-
-        });
-        // console.log("Choose Photo");
-    }
-
-    const handleCancel = () => {
-        navigation.goBack();
-    }
-
-
-
     // this is correct code without loading
-    // const submitPost = async () => {
-    //     const uploadUri = image;
-    //     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-    //     setUploading(true);
-
-    //     try {
-    //         const response = await fetch(uploadUri);
-
-    //         const blob = await response.blob();
-    //         await uploadBytes(ref(storage, filename), blob).then((snapshot) => {
-    //             console.log('Uploaded a blob or file!');
-    //         });
-    //         setUploading(false);
-    //         Alert.alert(
-    //             "Image Uploaded!",
-    //             "Your image has been uploaded to Firebase Storage successfully!"
-    //         );
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    // };
-
-
-    // this is with loading
     const submitPost = async () => {
-        
         const uploadUri = image;
         let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
         setUploading(true);
 
-        setTransferred(0)
-
+        setImage()
         try {
             const response = await fetch(uploadUri);
+
             const blob = await response.blob();
-
-            // Create a storage reference with the filename
-            const storageRef = ref(storage, filename);
-
-            // Create an upload task using the storage reference
-            const uploadTask = uploadBytesResumable(storageRef, blob);
-
-            // Listen for state changes, errors, and completion of the upload task
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // Handle progress updates if needed
-                    //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + transferred + '% done');
-                    //   setTransferred(progress);
-                    setTransferred(
-                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                },
-                (error) => {
-                    // Handle unsuccessful upload
-                    console.error(error);
-                    setUploading(false);
-                    Alert.alert(
-                        "Upload Failed",
-                        "Error occurred while uploading the image. Please try again."
-                    );
-                },
-
-                async () => {
-                    // Handle successful upload
-                    try {
-                        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
-                        //    .then((downloadURL) => {
-                        console.log("File available at", downloadURL);
-                        setUploading(false);
-                        Alert.alert(
-                            "Image Uploaded!",
-                            "Your image has been uploaded to Firebase Storage successfully!"
-                        );
-                        // });
-
-                    }
-
-                    catch (error) {
-                        console.error(error);
-                        setUploading(false);
-                        Alert.alert(
-                            "Upload Failed",
-                            "Error occurred while uploading the image. Please try again."
-                        );
-                    }
-                }
+            await uploadBytes(ref(storage, filename), blob).then((snapshot) => {
+                setTransferred(
+                    Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                console.log('Uploaded a blob or file!');
+            });
+            setUploading(false);
+            Alert.alert(
+                "Image Uploaded!",
+                "Your image has been uploaded to Firebase Storage successfully!"
             );
         } catch (error) {
             console.log(error);
-            setUploading(false);
-            Alert.alert(
-                "Upload Failed",
-                "Error occurred while uploading the image. Please try again."
-            );
         }
+
     };
 
-    console.log(userdata);
+
+
+
 
 
 
@@ -405,31 +229,16 @@ const UploadProfilePicture = ({ navigation }) => {
 
                     (
                         <View>
-                            <View style={{ marginTop: heightPixel(19) }}>
-                                <TouchableOpacity onPress={() => takePhotoFromCamera()}>
-                                    <Button title="Take a Photo" />
-                                </TouchableOpacity>
-                            </View>
 
-                            <View style={{ marginTop: heightPixel(19) }}>
-                                <TouchableOpacity onPress={() => choosePhotoFromLibrary()}>
-                                    <Button title="Choose from Library" />
-                                </TouchableOpacity>
-                            </View>
+
+
                             <View style={{ marginTop: heightPixel(19) }}>
                                 <TouchableOpacity onPress={() => handleUpload()}>
                                     <Button title="Upload" />
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={{ marginTop: heightPixel(19) }}>
-                                <TouchableOpacity
-                                    // onPress={submitPost}
-                                    onPress={handleCancel}
-                                >
-                                    <Button title="Cancel" />
-                                </TouchableOpacity>
-                            </View>
+
                         </View>
 
                     )
@@ -465,7 +274,7 @@ const UploadProfilePicture = ({ navigation }) => {
         </View>
     )
 }
-export default UploadProfilePicture;
+export default UploadProfilePicture1;
 
 const styles = StyleSheet.create({
     container: {

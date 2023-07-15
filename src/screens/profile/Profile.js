@@ -33,6 +33,28 @@ const Profile = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
 
+  // agr image yaha lani hai to ye code open kren
+  // Inside the Profile component
+// useEffect(() => {
+//   const loadProfilePicture = async () => {
+//     try {
+//       // Retrieve the updated profile picture URL from AsyncStorage or use a prop
+//       const updatedProfilePic = await AsyncStorage.getItem("updatedProfilePic");
+
+//       // Update the userdata state with the new profile picture URL
+//       setUserdata((prevData) => ({
+//         ...prevData,
+//         profilepic: updatedProfilePic,
+//       }));
+//     } catch (err) {
+//       // Handle the error
+//     }
+//   };
+
+//   loadProfilePicture();
+// }, []);
+
+
 
   const loaddata = async () => {
     const fetchData = async () => {
