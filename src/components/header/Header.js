@@ -19,21 +19,20 @@ const Header = (props) => {
     return (
 
 
-        <View style={[styles.container1, {justifyContent: props.justifyContent}]}>
+        <View style={[styles.container1, ]}>
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
             >
                 <Image
                     // style={{marginLeft:31}}
-                    style={{ marginLeft: props.marginLeft }}
                     // style={{ tintColor: '#FFFFFF' }}
                     source={props.image1}
                 />
             </TouchableOpacity>
-            <Text style={[styles.bible, {marginLeft: props.marginLeft1}]}>{props.title}</Text>
+            <Text style={[styles.bible, ]}>{props.title}</Text>
             <TouchableOpacity>
                 <Image
-                    style={{ width: 45, height: 44, marginLeft: props.marginLeft2 }}
+                    style={{ width: 45, height: 44,  }}
                     // style={{ width: 45, height: 44, marginLeft:9 }}
                     source={props.image2}
 
@@ -51,9 +50,10 @@ const styles = StyleSheet.create({
     container1: {
         flex: 0.7,
         // backgroundColor:"red",
-        // justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        marginHorizontal: widthPixel(22)
     },
     bible: {
         color: "#372329",

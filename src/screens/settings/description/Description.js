@@ -1,15 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, Alert, Pressable, TextInput, ActivityIndicator, ScrollView, } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert, TextInput, ActivityIndicator, } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { locationData } from '../../constants/Constants';
-
-import ratios from '../../styles/ratios';
-import Locations from '../../components/locations/Locations';
-import Header from '../../components/header/Header';
-import Button from '../../components/button/Button';
-import { errormessage } from '../../styles/CommonError';
+import ratios from '../../../styles/ratios';
+import Header from '../../../components/header/Header';
+import Button from '../../../components/button/Button';
+import { errormessage } from '../../../styles/CommonError';
 
 let {
   widthPixel,
@@ -20,40 +17,40 @@ let {
 } = ratios
 
 
-const XplafesDetail = ({ navigation }) => {
+const Description = ({ navigation }) => {
 
 
-  const [message, setmessage] = useState('')
+  const [description, setdescription] = useState('')
   const [loading, setLoading] = useState(false);
   const [errormsg, setErrormsg] = useState(null);
 
 
   const sendToBackend = () => {
 
-    if (message == '') {
-      setErrormsg("Please enter your message");
-      Alert.alert('Please enter message')
+    if (description == '') {
+      setErrormsg("Please enter your description/feedback");
+      Alert.alert('Please enter description/feedback')
     }
     else {
       setLoading(true)
       AsyncStorage.getItem('user').then(
         data => {
-          fetch('http://10.0.2.2:8090/setmessage', {
+          fetch('http://10.0.2.2:8090/setdescription', {
             method: 'post',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               email: JSON.parse(data).user.email,
-              message: message
+              description: description
             })
           })
             .then(res => res.json())
             .then(data => {
-              if (data.message === "Message has been sent Successfully") {
+              if (data.message === "Description Updated Successfully") {
                 setLoading(false)
-                Alert.alert('Message has been sent successfully')
-                navigation.navigate("Notification")
+                Alert.alert('Description has been set successfully')
+                navigation.navigate('Settings1')
               }
               else if (data.error === "Invalid Credentials") {
                 Alert.alert('Invalid Credentials')
@@ -92,84 +89,42 @@ const XplafesDetail = ({ navigation }) => {
   }
 
 
+
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
 
       <View style={{ flex: 0.2, marginTop: heightPixel(43) }}>
-        <Header title="Nearby Xplafé" marginLeft={31} marginLeft1={27}
-          image1={require("../../assets/images/arrow-left.png")}
+        <Header title="Description" marginLeft={31} marginLeft1={27}
+          image1={require("../../../assets/images/arrow-left.png")}
           image2={[]}
         />
       </View>
 
 
 
-      <View style={styles.container1}>
-        <Text style={styles.text}>Schindler’s Street, New York</Text>
-        <Image
-          source={require("../../assets/images/location.png")}
-        />
 
-      </View>
 
       <View style={styles.container2}>
-        <Text style={styles.message}>Time</Text>
+        <Text style={styles.message}>Description Message</Text>
       </View>
-
-      <View style={styles.container3}>
-        <Text style={styles.text}>From</Text>
-        <Text style={styles.text}>To</Text>
-      </View>
-      <View style={styles.container4}>
-
-        <View style={{
-          justifyContent: 'space-between', paddingHorizontal: widthPixel(15),
-          alignItems: 'center', flexDirection: 'row', width: "40%", height: 46, backgroundColor: "white", borderRadius: 15
-        }}>
-          <Text>Date</Text>
-          <TouchableOpacity>
-            <Image
-              source={require("../../assets/images/calendar.png")}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{
-          justifyContent: 'space-between', paddingHorizontal: widthPixel(15),
-          alignItems: 'center', flexDirection: 'row', width: "40%", height: 46, backgroundColor: "white", borderRadius: 15
-        }}>
-          <Text>Date</Text>
-          <TouchableOpacity>
-            <Image
-              source={require("../../assets/images/calendar.png")}
-            />
-          </TouchableOpacity>
-        </View>
-
-      </View>
-
-      <View style={styles.container2}>
-        <Text style={styles.message}>Message</Text>
-      </View>
-
-
-
 
       {
         errormsg ? <Text style={errormessage}>{errormsg}</Text> : null
       }
 
-
       <View style={styles.container5}>
         <TextInput
-          placeholder='Please enter your Message'
+          placeholder='Please enter your new description'
           placeholderTextColor="#372329"
-          onChangeText={(text) => setmessage(text)}
+          onChangeText={(text) => setdescription(text)}
           onPressIn={() => setErrormsg(null)}
           multiline={true}
           numberOfLines={20}
-          style={styles.input}
+        // style={styles.input}
         />
       </View>
+
 
 
 
@@ -177,11 +132,11 @@ const XplafesDetail = ({ navigation }) => {
 
 
       <TouchableOpacity style={styles.button} onPress={() => sendToBackend()}>
-        <Button title="Send Message !" />
+        <Button title="Save Description !" />
       </TouchableOpacity>
 
 
-    </ScrollView>
+    </View>
   )
 }
 
@@ -200,8 +155,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     marginHorizontal: widthPixel(22),
-    height: 46,
-    marginTop: 10
+    height: 46
   },
   text: {
     color: "#372329",
@@ -225,35 +179,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: widthPixel(24),
-    // backgroundColor: 'red',
-    paddingHorizontal: widthPixel(15),
-    marginBottom: 5
-
   },
   container4: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: widthPixel(24),
-    // backgroundColor: 'green',
-
   },
   container5: {
     backgroundColor: "#FFFFFF",
     borderRadius: 17,
     marginHorizontal: widthPixel(20),
     flex: 1,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     // height: 345
   },
   input: {
-    // borderWidth: 1,
-    // borderColor: "#FF3974",
+    borderWidth: 1,
+    borderColor: "#372329",
     borderRadius: 10,
     paddingHorizontal: widthPixel(10),
     backgroundColor: "#FFFFFF",
-    width: "80%",
-    height: "70%"
+    width: "100%",
+    height: "100%"
   },
   button: {
     flex: 0.3,
@@ -263,4 +211,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default XplafesDetail;
+export default Description;

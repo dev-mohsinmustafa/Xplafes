@@ -64,32 +64,18 @@ const ConnectNearby = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
-            <Header title="Connect nearby" marginLeft={31} marginLeft1={27}
+            <Header title="Connect nearby" 
                 image1={require("../../assets/images/arrow-left.png")}
+                image2={[]}
             />
-            {/* 
-      <View style={styles.container1}>
-        <Text style={styles.xplafes}>Xplafés Around</Text>
-        <Text style={styles.xplafes}>You Details</Text>
-      </View> */}
 
 
-            {/* 
-      <View style={styles.container2}>
-        {
-          locationData.map((item, index) => {
-            return (
-              // <Text key={index}>{item.location} - {item.address}</Text>
-              <Locations key={index} locationData={item} />
-            )
-          })
-        }
 
 
-      </View> */}
 
-
-            <Button title="Explafe It!" />
+            <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                <Button title="Explafe It!" />
+            </TouchableOpacity>
 
 
         </View>
@@ -108,12 +94,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // backgroundColor: "red",
-        // marginBottom:61
     },
-    xplafes: {
-        color: "#372329",
-        fontFamily: "Nunito-SemiBold",
-        fontSize: fontPixel(30),
+    button: {
+        flex: 0.3,
+        marginTop: heightPixel(10),
     },
     container2: {
         // backgroundColor: "green",

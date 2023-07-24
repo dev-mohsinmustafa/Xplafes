@@ -26,21 +26,38 @@ const Settings1 = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{ marginHorizontal: 22, flex: 0.2 }}>
-                <Header title="Settings" justifyContent="space-between" image1={require("../../assets/images/arrow-left.png")}
+            <View style={{ flex: 0.2 }}>
+                <Header title="Settings" image1={require("../../assets/images/arrow-left.png")}
                     image2={require("../../assets/images/bible.png")}
                 />
             </View>
+            
 
-            <View>
+            <View style={styles.container1}>
                 <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
                     <Text style={styles.text} >Edit Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")}>
                     <Text style={styles.text}  >Change Password</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Description")}>
                     <Text style={styles.text}>Customer Support</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigation.navigate("AboutMe")}>
+                    <Text style={styles.text}>About Me</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("FeedBack")}>
+                    <Text style={styles.text}>Give FeedBack</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("ContactMe")}>
+                    <Text style={styles.text}>Contact Me</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("AboutApp")}>
+                    <Text style={styles.text}>About App</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("AboutMe")}>
+                    <Text style={styles.text}>Privacy Policy</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => logout()}>
                     <Text style={styles.text}>Log Out</Text>
@@ -63,12 +80,16 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        marginHorizontal: 24,
+        marginHorizontal: widthPixel(26),
         color: "#372329",
         fontFamily: "Nunito-SemiBold",
         fontSize: fontPixel(30),
         borderBottomColor: "gray",
         borderBottomWidth: 1,
+    },
+    container1:{
+        flex:1,
+        // backgroundColor:"red"
     }
 })
 export default Settings1;

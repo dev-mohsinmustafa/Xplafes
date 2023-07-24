@@ -19,10 +19,12 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 
 
-import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { initializeApp } from 'firebase/app';
+// import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { initializeApp } from 'firebase/app';
 
 
+import firebase from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
 
 
 let {
@@ -33,17 +35,24 @@ let {
     pixelSizeHorizontal,
 } = ratios
 
+import nopic from "../../assets/images/profile.png"
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyDF4pqIIVEnLB9ygMlfgm2Am7oUnq5cbGk",
     authDomain: "womensafetyapp-eaeb2.firebaseapp.com",
     projectId: "womensafetyapp-eaeb2",
     storageBucket: "womensafetyapp-eaeb2.appspot.com",
     messagingSenderId: "1035857805556",
-    appId: "1:1035857805556:web:27697254808eb90afbdea1"
+    appId: "1:1035857805556:web:27697254808eb90afbdea1",
+    databaseURL: "https://console.firebase.google.com/u/0/project/womensafetyapp-eaeb2/database/womensafetyapp-eaeb2-default-rtdb/data/~2F"
 };
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+// Check if Firebase is already initialized before initializing it again
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 
 
 
@@ -55,45 +64,46 @@ const UploadProfilePicture1 = ({ navigation }) => {
 
 
     const [userdata, setUserdata] = useState(null);
-    const [image, setImage] = useState(null);
+    const [imagePath, setImagePath] = useState(nopic);
     const [uploading, setUploading] = useState(false);
     const [transferred, setTransferred] = useState(0);
 
 
-    const pickImage = () => {
-        const options = {
-            mediaType: 'photo',
-            allowsEditing: true,
-            aspectRatio: [1, 1],
-            quality: 1,
-        };
+    // const pickImage = () => {
+    //     const options = {
+    //         mediaType: 'photo',
+    //         allowsEditing: true,
+    //         aspectRatio: [1, 1],
+    //         quality: 1,
+    //     };
 
-        launchImageLibrary(options).then((result) => {
-            // Handle the result here
-            console.log(result);
-        }).catch((error) => {
-            // Handle any errors here
-            console.log(error);
-        });
-    };
+    //     launchImageLibrary(options).then((result) => {
+    //         // Handle the result here
+    //         console.log(result);
+    //     }).catch((error) => {
+    //         // Handle any errors here
+    //         console.log(error);
+    //     });
+    // };
 
 
 
     const handleUpload = () => {
 
-        pickImage()
+        // pickImage()
+        setTransferred(0)
 
         AsyncStorage.getItem("user")
             .then(data => {
                 setUploading(true)
                 // setLoading(true)
-                submitPost().then(imageUri => {
+                submitPost().then(url => {
                     fetch("http://10.0.2.2:8090/setprofilepic", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ email: JSON.parse(data).user.email, profilepic: imageUri })
+                        body: JSON.stringify({ email: JSON.parse(data).user.email, profilepic: url })
                     })
                         // })
                         .then(res => res.json())
@@ -126,33 +136,65 @@ const UploadProfilePicture1 = ({ navigation }) => {
 
 
     // this is correct code without loading
+    // const submitPost = async () => {
+    //     const uploadUri = image;
+    //     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    //     setUploading(true);
+
+    //     setImage()
+    //     try {
+    //         const response = await fetch(uploadUri);
+
+    //         const blob = await response.blob();
+    //         await uploadBytes(ref(storage, filename), blob).then((snapshot) => {
+    //             setTransferred(
+    //                 Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //             );
+    //             console.log('Uploaded a blob or file!');
+    //         });
+    //         setUploading(false);
+    //         Alert.alert(
+    //             "Image Uploaded!",
+    //             "Your image has been uploaded to Firebase Storage successfully!"
+    //         );
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+    // };
+
+
+
+
     const submitPost = async () => {
-        const uploadUri = image;
-        let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-        setUploading(true);
-
-        setImage()
         try {
-            const response = await fetch(uploadUri);
+            let options = {
+                storageOptions: {
+                    path: 'image',
+                },
+            };
+            launchImageLibrary(options, async (response) => {
+                const imagePath = response.assets[0].uri;
+                setImagePath(imagePath);
+                console.log('imagePath', imagePath);
 
-            const blob = await response.blob();
-            await uploadBytes(ref(storage, filename), blob).then((snapshot) => {
-                setTransferred(
-                    Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-                console.log('Uploaded a blob or file!');
+                const uploadUri = imagePath;
+                console.log('uploadUri', uploadUri);
+                const fileName = imagePath.substring(imagePath.lastIndexOf('/') + 1);
+                setUploading(true);
+                const imgRes = await storage().ref(fileName).putFile(imagePath);
+                console.log("image uploaded", imgRes);
+                setUploading(false);
+                Alert.alert('Image Updated!');
+                const url = await storage().ref(fileName).getDownloadURL();
+                console.log('url', url);
+                await AsyncStorage.setItem('image', url);
+                console.log('URL stored in AsyncStorage');
             });
-            setUploading(false);
-            Alert.alert(
-                "Image Uploaded!",
-                "Your image has been uploaded to Firebase Storage successfully!"
-            );
         } catch (error) {
-            console.log(error);
+            console.log(error, error.message);
         }
-
     };
-
 
 
 
@@ -189,19 +231,25 @@ const UploadProfilePicture1 = ({ navigation }) => {
 
                 {
                     // yaha pe ap bolo ge ke agr pic hai to uski length 0 se bari hogi na
-                    image ?
+                    userdata?.imagePath ?
                         // agr length o se bari to ye kam kro
+                        <TouchableOpacity>
 
-                        <Image
-                            style={styles.updatedProfilePic}
-                            source={{ uri: image }}
-                        />
+                            <Image
+                                style={styles.updatedProfilePic}
+                                source={{ uri: userdata.imagePath }}
+                            />
+                        </TouchableOpacity>
 
 
-                        : <Image
-                            style={{ alignSelf: 'center', marginTop: 100 }}
-                            source={require("../../assets/images/profile.png")}
-                        />
+                        :
+                        <TouchableOpacity>
+                            <Image
+
+                                style={{ alignSelf: 'center', marginTop: 100 }}
+                                source={nopic}
+                            />
+                        </TouchableOpacity>
                     // nahi to blank */}
 
                 }

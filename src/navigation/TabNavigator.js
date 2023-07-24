@@ -11,7 +11,7 @@ import Profile from '../screens/profile/Profile';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ratios from "../styles/ratios";
-import WomenWork from '../screens/channel/WomenWork';
+import ChatGpt from '../screens/channel/ChatGpt';
 
 let {
     widthPixel,
@@ -38,7 +38,7 @@ const ChannelStack = () => {
 return(
     <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Channel" component={Channel} />
-    <Stack.Screen name="WomenWork" component={WomenWork} />
+    <Stack.Screen name="ChatGPT" component={ChatGpt} />
 </Stack.Navigator>
 )
 

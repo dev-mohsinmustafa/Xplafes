@@ -35,24 +35,24 @@ const Profile = ({ navigation }) => {
 
   // agr image yaha lani hai to ye code open kren
   // Inside the Profile component
-// useEffect(() => {
-//   const loadProfilePicture = async () => {
-//     try {
-//       // Retrieve the updated profile picture URL from AsyncStorage or use a prop
-//       const updatedProfilePic = await AsyncStorage.getItem("updatedProfilePic");
+  // useEffect(() => {
+  //   const loadProfilePicture = async () => {
+  //     try {
+  //       // Retrieve the updated profile picture URL from AsyncStorage or use a prop
+  //       const updatedProfilePic = await AsyncStorage.getItem("updatedProfilePic");
 
-//       // Update the userdata state with the new profile picture URL
-//       setUserdata((prevData) => ({
-//         ...prevData,
-//         profilepic: updatedProfilePic,
-//       }));
-//     } catch (err) {
-//       // Handle the error
-//     }
-//   };
+  //       // Update the userdata state with the new profile picture URL
+  //       setUserdata((prevData) => ({
+  //         ...prevData,
+  //         profilepic: updatedProfilePic,
+  //       }));
+  //     } catch (err) {
+  //       // Handle the error
+  //     }
+  //   };
 
-//   loadProfilePicture();
-// }, []);
+  //   loadProfilePicture();
+  // }, []);
 
 
 
@@ -274,16 +274,18 @@ const Profile = ({ navigation }) => {
       <View style={styles.container3}>
         {
           // yaha pe ap bolo ge ke agr pic hai to uski length 0 se bari hogi na
-          userdata.profilepic.length > 0 ?
+          userdata?.profilepic ?
             // agr length o se bari to ye kam kro
 
             <Image
               style={styles.profilepic}
-              source={{ uri: userdata.profilepic }}
+              source={{ uri: userdata?.profilepic }}
             />
 
 
-            : <Image
+            : 
+            
+            <Image
               source={require("../../assets/images/profile.png")}
             />
           // nahi to blank */}
@@ -291,6 +293,7 @@ const Profile = ({ navigation }) => {
         }
 
       </View>
+      
 
       {
         userdata ? (
@@ -306,20 +309,21 @@ const Profile = ({ navigation }) => {
             <Text>Password: {userdata.password}</Text> */}
 
 
+
             <View style={styles.mainContainer}>
               <Text style={styles.email}>Name</Text>
             </View>
 
             <View style={styles.inputContainer}>
-              <TextInput
+              <Text
                 // This will display the userdata.fullName value in the TextInput component.
                 //  Again, use the optional chaining operator ?. to access the fullName property 
                 //  without throwing an error in case userdata is null or undefined.
-                value={userdata?.fullName}
+                // value={userdata?.fullName}
                 placeholder='Marie Antoinette'
                 placeholderTextColor="#372329"
-                style={[styles.input, styles.inputField, { textAlign: 'center' }]}
-              />
+                style={[styles.input, styles.inputField, { textAlign: 'center', height: heightPixel(50), textAlignVertical: 'center', backgroundColor: "red" }]}
+              >{userdata?.fullName}</Text>
             </View>
 
             <View style={{ marginTop: heightPixel(16) }}>
@@ -328,15 +332,32 @@ const Profile = ({ navigation }) => {
               </View>
 
               <View style={styles.inputContainer}>
-                <TextInput
+                <Text
                   // ? is ka mtlb agr error ata to show krwao
-                  value={userdata?.email}
+                  // value={userdata?.email}
                   placeholder='marieantoinette@gmail.com'
                   placeholderTextColor="#372329"
-                  style={[styles.input, styles.inputField, { textAlign: 'center' }]}
-                />
+                  style={[styles.input, styles.inputField, { textAlign: 'center', height: heightPixel(50), textAlignVertical: 'center', backgroundColor: "red" }]}
+                >{userdata?.email}</Text>
               </View>
             </View>
+
+            <View style={{ marginTop: heightPixel(16) }}>
+
+              <View style={styles.mainContainer}>
+                <Text style={styles.email}>Description</Text>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text
+                  placeholder='Web and Mobile App Developer'
+                  placeholderTextColor="#372329"
+                  style={[styles.input, styles.inputField, { textAlign: 'center', height: heightPixel(50), textAlignVertical: 'center', backgroundColor: "pink" }]}
+                >{userdata?.description}</Text>
+              </View>
+            </View>
+
+
 
           </View>
         )
@@ -400,7 +421,7 @@ const styles = StyleSheet.create({
 
   container3: {
     // backgroundColor: "green",
-    flex: 1,
+    flex: 0.7,
     justifyContent: 'center',
     alignItems: 'center',
     // marginTop:12
@@ -410,6 +431,12 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75
+  },
+  description: {
+    backgroundColor: 'pink',
+    width: "80%",
+    height: 50,
+
   },
   container4: {
     // backgroundColor: "blue",
@@ -427,8 +454,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginHorizontal: widthPixel(28),
-    height: heightPixel(50),
-    width: widthPixel(355),
+
     // width:"75%"
   },
   input: {
@@ -493,17 +519,3 @@ const styles = StyleSheet.create({
 })
 
 export default Profile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

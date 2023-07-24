@@ -63,19 +63,21 @@ const UploadProfilePicture = ({ navigation }) => {
     const [transferred, setTransferred] = useState(0);
 
 
+    const handleUpload2 = () => {
 
-
-
-    const handleUpload = () => {
-
-
-        choosePhotoFromLibrary();
+        choosePhotoFromLibrary()
 
         AsyncStorage.getItem("user")
             .then(data => {
                 setUploading(true)
                 // setLoading(true)
                 submitPost().then(imageUri => {
+
+                    // agr profilepage me ye updateprofilepicture dekhane hai to ye likhe or uper 
+                    // (updateProfilePicture) ye bhej den bs
+                    // Update the profile picture URL in the parent component
+                    //   updateProfilePicture(imageUri);
+
                     fetch("http://10.0.2.2:8090/setprofilepic", {
                         method: "POST",
                         headers: {
@@ -101,11 +103,64 @@ const UploadProfilePicture = ({ navigation }) => {
                                 setUploading(false)
                                 navigation.navigate("Login")
                             }
-                            else {
+                            // else {
+                            //     setUploading(false)
+                            //     // setLoading(false)
+                            //     Alert.alert("Please Try Again!")
+                            // }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                })
+            })
+    }
+
+
+
+
+    const handleUpload = () => {
+        AsyncStorage.getItem("user")
+            .then(data => {
+                setUploading(true)
+                // setLoading(true)
+                submitPost().then(imageUri => {
+
+                    // agr profilepage me ye updateprofilepicture dekhane hai to ye likhe or uper 
+                    // (updateProfilePicture) ye bhej den bs
+                    // Update the profile picture URL in the parent component
+                    //   updateProfilePicture(imageUri);
+
+                    fetch("http://10.0.2.2:8090/setprofilepic", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ email: JSON.parse(data).user.email, profilepic: imageUri })
+                    })
+                        // })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.message === "Profile Picture Uploaded Successfully") {
+                                console.log("profile aye ke nai", data);
+
+                                setUserdata(data.user);
                                 setUploading(false)
                                 // setLoading(false)
-                                Alert.alert("Please Try Again!")
+                                Alert.alert("Profile Picture Uploaded Successfully")
+                                navigation.navigate("Settings1")
                             }
+                            else if (data.error === "Invalid Credentials") {
+                                Alert.alert("Invalid Credentials")
+                                // setLoading(false)
+                                setUploading(false)
+                                navigation.navigate("Login")
+                            }
+                            // else {
+                            //     setUploading(false)
+                            //     // setLoading(false)
+                            //     Alert.alert("Please Try Again!")
+                            // }
                         })
                         .catch(err => {
                             console.log(err)
@@ -202,6 +257,8 @@ const UploadProfilePicture = ({ navigation }) => {
             // submitPost();
         });
         // console.log("Take Photo");
+        handleUpload();
+
     }
 
     const choosePhotoFromLibrary = async () => {
@@ -219,9 +276,9 @@ const UploadProfilePicture = ({ navigation }) => {
             // update state
             setImage(imageUri);
             // submitPost();
-
         });
         // console.log("Choose Photo");
+        handleUpload();
     }
 
     const handleCancel = () => {
@@ -257,7 +314,7 @@ const UploadProfilePicture = ({ navigation }) => {
 
     // this is with loading
     const submitPost = async () => {
-        
+
         const uploadUri = image;
         let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
         setUploading(true);
@@ -282,9 +339,7 @@ const UploadProfilePicture = ({ navigation }) => {
                     //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + transferred + '% done');
                     //   setTransferred(progress);
-                    setTransferred(
-                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
+                    setTransferred(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                 },
                 (error) => {
                     // Handle unsuccessful upload
@@ -417,7 +472,7 @@ const UploadProfilePicture = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ marginTop: heightPixel(19) }}>
-                                <TouchableOpacity onPress={() => handleUpload()}>
+                                <TouchableOpacity onPress={() => handleUpload2()}>
                                     <Button title="Upload" />
                                 </TouchableOpacity>
                             </View>

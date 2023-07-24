@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import ratios from '../../styles/ratios';
-import Header from '../../components/header/Header';
+import Header from '../header/Header';
 
 let {
     widthPixel,
@@ -13,7 +13,7 @@ let {
 } = ratios
 
 
-const BibleDetail = () => {
+const SafetyAtWork = () => {
     return (
         <View style={styles.container}>
 
@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFECD0",
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        borderRadius: 30,
+      
     },
     container1: {
         flex: 0.3,
@@ -137,4 +137,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default BibleDetail;
+export default SafetyAtWork;

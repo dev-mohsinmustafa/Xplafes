@@ -1,12 +1,16 @@
 
 import React, { useEffect, useState } from 'react'
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, Alert, } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, Alert, Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { locationData } from '../../constants/Constants';
 
 import ratios from '../../styles/ratios';
 import Locations from '../../components/locations/Locations';
+
+import AwesomeIcon from 'react-native-vector-icons/Ionicons';
+import AwesomeIcon1 from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 let {
   widthPixel,
@@ -66,14 +70,25 @@ const XplafesList = ({ navigation }) => {
         <Text style={styles.xplafes}>You</Text>
       </View>
 
+      <Pressable style={styles.refresh}
+        onPress={() => navigation.navigate("AllChats")}>
+        <AwesomeIcon name="chatbubbles" size={30} color="#FF3974"
+        />
+      </Pressable>
+
+      <Pressable style={styles.search}
+        onPress={() => navigation.navigate("AllChats")}>
+        <AwesomeIcon1 name="account-search" size={35} color="#FF3974"
+        />
+      </Pressable>
 
 
       <View style={styles.container2}>
         {
           locationData.map((item, index) => {
-            return(
+            return (
               // <Text key={index}>{item.location} - {item.address}</Text>
-              <Locations key={index}  locationData={item} />
+              <Locations key={index} locationData={item} />
             )
           })
         }
@@ -111,6 +126,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  refresh: {
+    position: 'absolute',
+    top: 20,
+    right: 16,
+    zIndex: 1,
+  },
+  search: {
+    position: 'absolute',
+    top: 20,
+    left: 16,
+    zIndex: 1,
   }
 
 

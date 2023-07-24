@@ -227,7 +227,7 @@ const ChangeDescription = ({ navigation }) => {
                         <View style={styles.container1}>
                             <Text style={styles.login}>Change Description</Text>
                         </View>
-                        <Text style={styles.bwmessage}>Please Change your Description </Text>
+                        {/* <Text style={styles.bwmessage}>Please Change your Description </Text> */}
 
                         {/* yaha me ab error dekha deta hun agr user sara khush ni fill krta to */}
                         {
@@ -246,8 +246,8 @@ const ChangeDescription = ({ navigation }) => {
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     placeholder='Please enter your new description'
-                                    placeholderTextColor="#FFECD0"
-                                    style={[styles.input, styles.email]}
+                                    placeholderTextColor="black"
+                                    style={[styles.input, styles.description]}
                                     onChangeText={(text) => setdescription(text)}
                                     onPressIn={() => setErrormsg(null)}
                                     multiline={true}
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
         // height:heightPixel(67),
         left: 21,
         // bottom: 20,
-        marginTop: heightPixel(396),
+        marginTop: heightPixel(350),
 
     },
     login: {
@@ -367,15 +367,21 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginHorizontal: widthPixel(25),
-        height: widthPixel(40),
-        width: widthPixel(309)
+        // height: widthPixel(40),
+        // width: widthPixel(309)
         // width:"75%"
     },
     input: {
         borderWidth: 1,
-        borderColor: "#FFECD0",
+        borderColor: "gray",
         borderRadius: 10,
         paddingHorizontal: widthPixel(10),
+        backgroundColor:"#FFECD0",
+    },
+    description:{
+        color: "#372329",
+        fontFamily: "Nunito-Italic",
+        fontSize: fontPixel(16),
     },
     container2: {
         // flex: 1,

@@ -30,93 +30,76 @@ const Bible = ({ navigation }) => {
 
       <View style={styles.container3}>
 
-        <View style={styles.container4}>
-          <TouchableOpacity onPress={() => navigation.navigate("BibleDetail")}
-          >
-            <Text style={styles.text}>Safety at Work</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.container4}
+          onPress={() => navigation.navigate("SafetyAtWork")}
+        >
+
+          <Text style={styles.text}>Safety at Work</Text>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("BibleDetail")}
-            >
 
-              <Image
-                source={require("../../assets/images/arrow.png")}
-              />
-            </TouchableOpacity>
+
+            <Image
+              source={require("../../assets/images/arrow.png")}
+            />
           </View>
-        </View>
+        </TouchableOpacity>
 
 
-        <View style={styles.container4}>
-          <TouchableOpacity onPress={() => navigation.navigate("BibleDetail")}>
-            <Text style={styles.text}>Safety at Home</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.container4}
+          onPress={() => navigation.navigate("SafetyAtHome")}
+        >
+          <Text style={styles.text}>Safety at Home</Text>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("BibleDetail")}
-            >
 
-              <Image
-                source={require("../../assets/images/arrow.png")}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require("../../assets/images/arrow.png")}
+            />
           </View>
-        </View>
+        </TouchableOpacity>
 
 
 
-        <View style={styles.container4}>
-          <TouchableOpacity onPress={() => navigation.navigate("BibleDetail")}>
-            <Text style={styles.text}>Safety at University</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.container4}
+          onPress={() => navigation.navigate("SafetyAtUniversity")}
+        >
+          <Text style={styles.text}>Safety at University</Text>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("BibleDetail")}
-            >
 
-              <Image
-                source={require("../../assets/images/arrow.png")}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require("../../assets/images/arrow.png")}
+            />
           </View>
-        </View>
+        </TouchableOpacity>
 
 
 
-        <View style={styles.container4}>
-          <TouchableOpacity onPress={() => navigation.navigate("BibleDetail")}>
-            <Text style={styles.text}>Women Safety Online</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.container4}
+          onPress={() => navigation.navigate("WomenSafetyOnline")}
+
+        >
+          <Text style={styles.text}>Women Safety Online</Text>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("BibleDetail")}
-            >
 
-              <Image
-                source={require("../../assets/images/arrow.png")}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require("../../assets/images/arrow.png")}
+            />
           </View>
-        </View>
+        </TouchableOpacity>
 
 
 
-        <View style={styles.container4}>
-          <TouchableOpacity onPress={() => navigation.navigate("BibleDetail")}>
+        <TouchableOpacity style={styles.container4}
+        onPress={() => navigation.navigate("SafetyOnTheStreets")}
+        >
             <Text style={styles.text}>Safety on the Streets</Text>
-          </TouchableOpacity>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("BibleDetail")}
-            >
+          
 
               <Image
                 source={require("../../assets/images/arrow.png")}
               />
-            </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
 
 
       </View>

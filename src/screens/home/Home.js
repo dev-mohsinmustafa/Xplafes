@@ -1,12 +1,20 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("ConnectNearby")}>
-        <Text >Home</Text>
+
+        <View>
+          <Image
+
+            source={require("../../assets/images/map.png")}
+          />
+        </View>
+
       </TouchableOpacity>
+
     </View>
   )
 }
