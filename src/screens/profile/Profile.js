@@ -349,11 +349,14 @@ const Profile = ({ navigation }) => {
               </View>
 
               <View style={styles.inputContainer}>
-                <Text
+                <TextInput
                   placeholder='Web and Mobile App Developer'
+                  // placeholder='I am a Software Developer and I love to code'
                   placeholderTextColor="#372329"
-                  style={[styles.input, styles.inputField, { textAlign: 'center', height: heightPixel(50), textAlignVertical: 'center', backgroundColor: "pink" }]}
-                >{userdata?.description}</Text>
+                  style={[styles.input, styles.inputField,{ textAlign: 'center', height: heightPixel(50), textAlignVertical: 'center', backgroundColor: "pink" }]}
+                value={userdata?.description}
+                />
+                  {/* {userdata?.description}</Text> */}
               </View>
             </View>
 

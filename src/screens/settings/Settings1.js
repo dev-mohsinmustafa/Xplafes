@@ -47,6 +47,9 @@ const Settings1 = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate("AboutMe")}>
                     <Text style={styles.text}>About Me</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("SOSScreen")}>
+                    <Text style={styles.text}>SOS Signal</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("FeedBack")}>
                     <Text style={styles.text}>Give FeedBack</Text>
                 </TouchableOpacity>
@@ -56,7 +59,7 @@ const Settings1 = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate("AboutApp")}>
                     <Text style={styles.text}>About App</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("AboutMe")}>
+                <TouchableOpacity onPress={() => navigation.navigate("PrivacyPolicy")}>
                     <Text style={styles.text}>Privacy Policy</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => logout()}>
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
         marginHorizontal: widthPixel(26),
         color: "#372329",
         fontFamily: "Nunito-SemiBold",
-        fontSize: fontPixel(30),
+        fontSize: fontPixel(29),
         borderBottomColor: "gray",
         borderBottomWidth: 1,
     },

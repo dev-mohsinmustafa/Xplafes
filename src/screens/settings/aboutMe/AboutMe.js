@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import ratios from '../../styles/ratios';
-import Header from '../../components/header/Header';
+import ratios from '../../../styles/ratios';
+import Header from '../../../components/header/Header';
 
 let {
     widthPixel,
@@ -20,8 +20,8 @@ const AboutMe = () => {
 
 
             <Header title="About Me"
-                image1={require("../../assets/images/arrow-left.png")}
-                image2={require("../../assets/images/bible.png")}
+                image1={require("../../../assets/images/arrow-left.png")}
+                image2={require("../../../assets/images/bible.png")}
 
 
             />
@@ -32,7 +32,7 @@ const AboutMe = () => {
             <View style={styles.container2}>
                 <View>
                     <Image
-                        source={require("../../assets/images/mohsin.png")}
+                        source={require("../../../assets/images/mohsin.png")}
                         style={{ width: 300, height: 300, borderRadius: 300, marginTop: 10 }}
                         resizeMode='contain'
                     />
@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
         marginTop: heightPixel(39),
     },
     lorem: {
-        color: "#372329",
+        color: "#FF3974",
         fontFamily: "Nunito-Bold",
-        fontSize: fontPixel(14),
+        fontSize: fontPixel(28),
         maxWidth: widthPixel(353),
         marginHorizontal: 9
     },

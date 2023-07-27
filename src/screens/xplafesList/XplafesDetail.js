@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Image, Alert, Pressable, TextInput, ActivityIndicator, ScrollView, } from 'react-native'
+import { Platform, StyleSheet, Text, View, TouchableOpacity, Image, Alert, Pressable, TextInput, ActivityIndicator, ScrollView, } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { locationData } from '../../constants/Constants';
@@ -19,6 +19,8 @@ let {
   pixelSizeHorizontal,
 } = ratios
 
+import DateTimePicker from "@react-native-community/datetimepicker";
+
 
 const XplafesDetail = ({ navigation }) => {
 
@@ -26,6 +28,39 @@ const XplafesDetail = ({ navigation }) => {
   const [message, setmessage] = useState('')
   const [loading, setLoading] = useState(false);
   const [errormsg, setErrormsg] = useState(null);
+  
+  
+  
+  // DateTimePicker
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState("Empty");
+  
+
+  const showMode = (currentMode)=>{
+    setShow(true);
+    setMode(currentMode);
+  }
+
+
+  const onChange =(event, selectedDate)=>{
+    const currentDate = selectedDate || date; //|| it means otherwise , and date this is initial date 
+  setShow(Platform.OS === "ios");
+  setDate(currentDate);
+
+  let tempDate = new Date(currentDate);
+  let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear(); // 1 is index
+
+  let fTime = "Hours: " + tempDate.getHours() + " | Minutes: " + tempDate.getMinutes();
+
+  setText(fDate + "\n" + fTime) // \n for new line 
+  console.log(fDate + " (" + fTime + ")"); 
+
+
+
+  }
+
 
 
   const sendToBackend = () => {
@@ -124,21 +159,36 @@ const XplafesDetail = ({ navigation }) => {
 
         <View style={{
           justifyContent: 'space-between', paddingHorizontal: widthPixel(15),
-          alignItems: 'center', flexDirection: 'row', width: "40%", height: 46, backgroundColor: "white", borderRadius: 15
+          alignItems: 'center', flexDirection: 'row', width: "47%", height: 46, backgroundColor: "white", borderRadius: 15
         }}>
-          <Text>Date</Text>
-          <TouchableOpacity>
+          <Text style={styles.textDate}>{text}</Text>
+          <TouchableOpacity onPress={()=> showMode("date")}>
             <Image
               source={require("../../assets/images/calendar.png")}
             />
           </TouchableOpacity>
+
+          {
+            show && (
+            <DateTimePicker 
+            testID='dateTimePicker'
+            value={date}  // initial date
+            mode={mode}  // this mode is "date" and "time" we call onpress in line number 165
+            is24Hour={true}
+            display='default'
+            onChange={onChange}
+            
+            />
+            
+            )
+          }
         </View>
         <View style={{
           justifyContent: 'space-between', paddingHorizontal: widthPixel(15),
-          alignItems: 'center', flexDirection: 'row', width: "40%", height: 46, backgroundColor: "white", borderRadius: 15
+          alignItems: 'center', flexDirection: 'row', width: "47%", height: 46, backgroundColor: "white", borderRadius: 15
         }}>
           <Text>Date</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> showMode("time")}>
             <Image
               source={require("../../assets/images/calendar.png")}
             />
@@ -235,8 +285,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: widthPixel(24),
     // backgroundColor: 'green',
-
   },
+  textDate:{
+fontWeight:"bold",
+fontSize:10
+  },
+
   container5: {
     backgroundColor: "#FFFFFF",
     borderRadius: 17,

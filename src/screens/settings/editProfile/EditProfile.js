@@ -1,8 +1,8 @@
 import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import Header from '../../components/header/Header'
+import Header from '../../../components/header/Header'
 
-import ratios from '../../styles/ratios';
+import ratios from '../../../styles/ratios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let {
@@ -27,8 +27,8 @@ const EditProfile = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={{ flex: 0.2 }}>
-                <Header title="Settings" image1={require("../../assets/images/arrow-left.png")}
-                    image2={require("../../assets/images/bible.png")}
+                <Header title="Settings" image1={require("../../../assets/images/arrow-left.png")}
+                    image2={require("../../../assets/images/bible.png")}
                 />
             </View>
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
         color: "#372329",
         fontFamily: "Nunito-SemiBold",
-        fontSize: fontPixel(30),
+        fontSize: fontPixel(29),
         borderBottomColor: "gray",
         borderBottomWidth: 1,
     }

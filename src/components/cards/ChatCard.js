@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const ChartCard = ({ chat }) => {
+const ChatCard = ({ chat }) => {
     console.log(chat);
     return (
         <View style={styles.chartCard}>
@@ -19,14 +19,14 @@ const ChartCard = ({ chat }) => {
     )
 }
 
-export default ChartCard;
+export default ChatCard;
 
 const styles = StyleSheet.create({
     chartCard: {
         flex: 1,
         backgroundColor: "#FF3974",
         marginVertical: 10,
-        marginTop: 10,
+        // marginTop: 10,
         borderRadius: 20,
         padding: 10,
         flexDirection: 'row',

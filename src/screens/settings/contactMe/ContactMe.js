@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
     totor: {
         marginTop: heightPixel(20),
-        color: "#372329",
+        color: "#FF3974",
         fontFamily: "Nunito-Bold",
         fontSize: fontPixel(20),
         maxWidth: widthPixel(353),

@@ -15,7 +15,7 @@ import SafetyAtWork from '../components/SafetyAtWork/SafetyAtWork';
 import ConnectNearby from '../screens/home/ConnectNearby';
 import Settings1 from '../screens/settings/Settings1';
 import ChangePassword from '../screens/settings/ChangePassword';
-import EditProfile from '../screens/settings/EditProfile';
+import EditProfile from '../screens/settings/editProfile/EditProfile';
 import ChangeUsername from '../screens/settings/ChangeUsername';
 // import ChangeDescription from '../screens/settings/ChangeDescription';
 import UploadProfilePicture from '../screens/settings/UploadProfilePicture';
@@ -25,7 +25,7 @@ import SafetyAtHome from '../components/SafetyAtHome/SafetyAtHome';
 import SafetyAtUniversity from '../components/SafetyAtUniversity/SafetyAtUniversity';
 import WomenSafetyOnline from '../components/WomenSafetyOnline/WomenSafetyOnline';
 import SafetyOnTheStreets from '../components/SafetyOnTheStreets/SafetyOnTheStreets';
-import AboutMe from '../screens/settings/AboutMe';
+import AboutMe from '../screens/settings/aboutMe/AboutMe';
 import AllChats from '../screens/chatSection/AllChats';
 import Description from '../screens/settings/description/Description';
 import FeedBack from '../screens/settings/feedBack/FeedBack';
@@ -33,6 +33,11 @@ import ContactMe from '../screens/settings/contactMe/ContactMe';
 import AboutApp from '../screens/settings/aboutApp/AboutApp';
 import Notification from '../components/notification/Notification';
 import UploadProfile from '../screens/settings/uploadProfilePicture/UploadProfile';
+import SOSScreen from '../screens/settings/sos/SOSScreen';
+import PrivacyPolicy from '../screens/settings/privacyPolicy/PrivacyPolicy';
+import SearchUserPage from '../screens/searchUserPage/SearchUserPage';
+import OtherUserProfile from '../screens/profile/OtherUserProfile';
+import MessagePage from '../screens/chatSection/MessagePage';
 
 
 
@@ -82,27 +87,30 @@ const MainNavigator = () => {
         <Stack.Screen name="ChangeDescription" component={ChangeDescription} />
         <Stack.Screen name="UploadProfilePicture" component={UploadProfilePicture} />
         <Stack.Screen name="UploadProfilePicture1" component={UploadProfilePicture1} />
-       
+
         <Stack.Screen name="AllChats" component={AllChats}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
         />
         <Stack.Screen name="Description" component={Description}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
         />
         <Stack.Screen name="FeedBack" component={FeedBack}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
         />
         <Stack.Screen name="ContactMe" component={ContactMe}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
         />
         <Stack.Screen name="AboutApp" component={AboutApp}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
+        />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy}
+          options={{ animation: "slide_from_bottom" }}
         />
 
 
         {/* Notification */}
         <Stack.Screen name="Notification" component={Notification}
-        options={{animation:"slide_from_bottom"}}
+          options={{ animation: "slide_from_bottom" }}
         />
 
 
@@ -110,8 +118,18 @@ const MainNavigator = () => {
 
         <Stack.Screen name='XplafesList' component={TabNavigator} />
         <Stack.Screen name='UploadProfile' component={UploadProfile} />
+        {/* <Stack.Screen name='SOSScreen' component={SOSScreen} /> */}
 
+        <Stack.Screen name='SearchUserPage' component={SearchUserPage}
+          options={{ animation: "simple_push" }}
+        />
+        <Stack.Screen name='OtherUserProfile' component={OtherUserProfile}
+          options={{ animation: "simple_push" }}
+        />
 
+        <Stack.Screen name="MessagePage" component={MessagePage}
+          options={{ animation: "slide_from_bottom" }}
+        />
 
 
 

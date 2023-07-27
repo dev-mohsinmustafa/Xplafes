@@ -20,8 +20,7 @@ const AboutApp = ({ navigation }) => {
 
 
 
-            <Header title="About Version" marginLeft={31} marginLeft1={27}
-                marginLeft2={9}
+            <Header title="About Version" 
                 image1={require("../../../assets/images/arrow-left.png")}
                 image2={require("../../../assets/images/bible.png")}
 
@@ -33,7 +32,7 @@ const AboutApp = ({ navigation }) => {
                 <View>
                     <Image
                         source={require("../../../assets/images/girlcycle.png")}
-                        // style={{ width: 374, height: 194 }}
+                        style={{ width: 374, height: 174 }}
                         resizeMode='contain'
                     />
                 </View>
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
 
     },
     lorem: {
-        color: "#372329",
+        color: "#FF3974",
         fontFamily: "Nunito-Bold",
         fontSize: fontPixel(20),
     },

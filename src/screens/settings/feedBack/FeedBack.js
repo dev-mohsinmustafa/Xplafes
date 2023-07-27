@@ -162,7 +162,7 @@ const FeedBack = ({ navigation }) => {
                 // style={styles.input}
                 />
             </View>
-            <View style={{ marginHorizontal: widthPixel(22) }}>
+            <View style={{ marginHorizontal: widthPixel(22),marginTop:5 }}>
                 <Text style={styles.message}>Characters Limit 1200</Text>
             </View>
 

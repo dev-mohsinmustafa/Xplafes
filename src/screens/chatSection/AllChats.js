@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Header from '../../components/header/Header'
-import ChartCard from '../../components/cards/ChartCard'
+import ChatCard from '../../components/cards/ChatCard'
+import { chat, container1, searchbar } from '../../styles/CommonCss'
 
 
 
@@ -115,11 +116,11 @@ const AllChats = ({ navigation }) => {
 
 
             <ScrollView style={{ flex: 1 }}>
-                <View style={styles.container1}>
-                    <Text style={styles.chat}>Your Chats</Text>
+                <View style={container1}>
+                    <Text style={chat}>Your Chats</Text>
                     <TextInput
                         placeholder='Search'
-                        style={styles.searchbar}
+                        style={searchbar}
                         onChangeText={(text) => setKeyword(text)}
 
 
@@ -152,7 +153,7 @@ const AllChats = ({ navigation }) => {
                             }
                         ).map((chat) => {
                             return (
-                                <ChartCard
+                                <ChatCard
                                     key={chat.username} // beacuse username is unique
                                     chat={chat} //or agy bhej dya last msg username or time agy forward kr dya
                                 // item={chats.username}
@@ -177,36 +178,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFECD0",
         borderRadius: 30,
     },
-    container1: {
-        width: "95%",
-        flexDirection: "column",
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 30,
-        backgroundColor: '#FF3974',
-        alignSelf: 'center',
-        borderRadius: 20,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderColor: "#FF3974"
-
-    },
-    searchbar: {
-        width: "90%",
-        backgroundColor: "white",
-        borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        marginTop: 10,
-        fontSize: 18,
-
-
-    },
-    chat: {
-        color: "#372329",
-        fontFamily: "Nunito-SemiBold",
-        fontSize: 22,
-    },
+ 
     container2: {
         width: '100%',
         padding: 10,

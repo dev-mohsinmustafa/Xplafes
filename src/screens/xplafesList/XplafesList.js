@@ -77,7 +77,7 @@ const XplafesList = ({ navigation }) => {
       </Pressable>
 
       <Pressable style={styles.search}
-        onPress={() => navigation.navigate("AllChats")}>
+        onPress={() => navigation.navigate("SearchUserPage")}>
         <AwesomeIcon1 name="account-search" size={35} color="#FF3974"
         />
       </Pressable>
